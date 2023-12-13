@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>ECC Project</title>
+        <style>
+            body { background-color: beige; align-content: center; }
+        </style>
+    </head>
+    <body>
+        <h2><u>Upload the CTR Formats here:</u></h2>
+        <form method=post enctype=multipart/form-data action="{{ url_for('upload_file') }}">
+            <input type="file" name="file" multiple>
+            <input type="submit" value="upload">
+           </form>
+        <form action="next" >
+            <input type="submit" value="Next">
+        </form>
+           
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </body>
+</html>

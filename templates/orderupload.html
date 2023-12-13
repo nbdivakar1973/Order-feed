@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>ECC Project
+        </title>
+        <style>
+            body { background-color: beige; align-content: center;}
+        </style>
+    </head>
+    <body>
+       
+        <h2><u>Attach Order Feed excel here:</u></h2>
+    </body>
+    <form method=post enctype=multipart/form-data action="{{ url_for('orderupload') }}">
+     <input type="file" name="file" multiple>
+     <input type="submit" value="upload">
+    </form>
+    <form action="show_data">
+        <input type="submit" value="Show Data">
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+</html>
