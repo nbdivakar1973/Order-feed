@@ -43,7 +43,7 @@ def merge_dataframes_outer_merge(dfs):
 
 @app.route('/')
 def index():
-    return render_template('fileupload.html')
+    return render_template('index.html')
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -96,7 +96,7 @@ def upload_file():
         else:
             flash('Files upload successful!')
 
-    return render_template('fileupload.html')
+    return render_template('index.html')
 
 
 @app.route('/next')
