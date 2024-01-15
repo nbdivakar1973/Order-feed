@@ -111,7 +111,7 @@ def orderupload():
         if uploaded_df and allowed_file(uploaded_df.filename):
             data_filename = secure_filename(uploaded_df.filename)
             uploaded_df.save(os.path.join(app.config['UPLOAD_FOLDER'], data_filename))
-
+            
         flash('Files upload successful!')
 
     return render_template('orderupload.html')
@@ -123,7 +123,7 @@ def showdata():
     file_path_df1 = os.path.join(app.config['UPLOAD_FOLDER'], 'Order_Feed.xlsx')
     file_path_df2 = 'merged_data.xlsx'
 
-    df1 = pd.read_excel(file_path_df1, parse_dates=['Order Date']).astype(str)
+    df1 = pd.read_excel(file_path_df1, header=1, parse_dates=['Order Date']).astype(str)
     
     df2 = pd.read_excel(file_path_df2).astype(str)
  
@@ -139,7 +139,8 @@ def showdata():
     df1['Order Date'] = pd.to_datetime(df1['Order Date'])
 
     # Convert the date column to yymmdd format
-    df1['Order Date'] = df1['Order Date'].dt.strftime('%y%m%d')
+    df1['Order Date'] = pd.to_datetime(df1['Order Date'], format='%m%d%Y').dt.strftime('%y%m%d')
+
     
     df1['External Order Number']=df1['Order Date']+"VR"+df1['Customer Code']
     # Replacing Nan values with constant values specified by DTDC.
@@ -158,7 +159,7 @@ def showdata():
             "Bill To Address 1":"Plot No: 62P, Hoskote Industrial Area, Hoskote",
             "Bill To Address 2":"Bangalore - 562114",
             "Bill To Phone1":"8884831312"}
-    df1.replace('NaN', np.nan, inplace=True)
+    #df1.replace('NaN', np.nan, inplace=True)
     df1.fillna(value=values, inplace=True)
     
         
@@ -187,4 +188,4 @@ def showdata():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0',port=8080)
+    app.run(debug=True,  port=8080,host="0.0.0.0")
